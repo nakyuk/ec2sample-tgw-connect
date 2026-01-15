@@ -43,6 +43,29 @@ This guide demonstrates how to set up AWS Transit Gateway Connect using FRR (Fre
 | `PEER_ASN` | EC2 instance BGP ASN |
 
 
+```bash
+CONNECT_PEER_ID="tgw-connect-peer-01234567890123456"
+INSTANCE_ID="i-01234567890123456"
+
+PEER_INFO=$(aws ec2 describe-transit-gateway-connect-peers \
+    --transit-gateway-connect-peer-ids $CONNECT_PEER_ID \
+    --output json)
+
+TGW_IP_GRE=$(echo $PEER_INFO | jq -r '.TransitGatewayConnectPeers[0].ConnectPeerConfiguration.TransitGatewayAddress')
+TGW_IP_BGP=$(echo $PEER_INFO | jq -r '.TransitGatewayConnectPeers[0].ConnectPeerConfiguration.InsideCidrBlocks[0]')
+TGW_ASN=$(echo $PEER_INFO | jq -r '.TransitGatewayConnectPeers[0].ConnectPeerConfiguration.BgpConfigurations[0].TransitGatewayAsn')
+PEER_ASN=$(echo $PEER_INFO | jq -r '.TransitGatewayConnectPeers[0].ConnectPeerConfiguration.BgpConfigurations[0].PeerAsn')
+
+aws ec2 create-tags \
+    --resources $INSTANCE_ID \
+    --tags \
+        Key=TGW_IP_GRE,Value=$TGW_IP_GRE \
+        Key=TGW_IP_BGP,Value=$TGW_IP_BGP \
+        Key=TGW_ASN,Value=$TGW_ASN \
+        Key=PEER_ASN,Value=$PEER_ASN
+```
+
+
 ## Step 2: Configure EC2 Instance
 
 ```bash
