@@ -35,12 +35,12 @@ This guide demonstrates how to set up AWS Transit Gateway Connect using FRR (Fre
 
 3. Add the following tags to your EC2 instance:
 
-| Key | Description |
-|-----|-------------|
-| `TGW_IP_GRE` | Transit Gateway Connect peer IP address |
-| `TGW_IP_BGP` | Inside CIDR block for BGP peering |
-| `TGW_ASN` | Transit Gateway ASN |
-| `PEER_ASN` | EC2 instance BGP ASN |
+| Key | Example | Description |
+|-----|-------|-------------|
+| `TGW_IP_GRE` | `10.0.0.1` | Transit Gateway Connect peer IP address |
+| `TGW_IP_BGP` | `169.254.0.0/29` | Inside CIDR block for BGP peering |
+| `TGW_ASN` | `64500` | Transit Gateway ASN |
+| `PEER_ASN` | `65000` | EC2 instance BGP ASN |
 
 
 ```bash
