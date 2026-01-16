@@ -74,7 +74,7 @@ Run the following command on the EC2 instance
 #!/bin/bash
 sleep 30
 sudo apt -y update
-sudo apt install -y frr
+sudo apt install -y unzip frr
 wget https://github.com/nakyuk/ec2sample-tgw-connect/archive/refs/heads/main.zip
 unzip main.zip
 cd ec2sample-tgw-connect-main/
